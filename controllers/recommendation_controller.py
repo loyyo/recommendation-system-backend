@@ -1,8 +1,14 @@
 from fastapi import APIRouter
 from services.recommendation_service import RecommendationService
+import pathlib
 
 router = APIRouter()
-recommendation_service = RecommendationService("data/products.csv", "data/user_interactions.csv")
+
+base_path = pathlib.Path(__file__).parent.parent.resolve()
+product_file_path = base_path / "data" / "products.csv"
+user_file_path = base_path / "data" / "user_interactions.csv"
+
+recommendation_service = RecommendationService(str(product_file_path), str(user_file_path))
 
 
 @router.get("/recommendations/{user_id}", tags=["Recommendations"])

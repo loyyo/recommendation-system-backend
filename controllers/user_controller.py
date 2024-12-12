@@ -1,8 +1,13 @@
 from fastapi import APIRouter
 from services.user_service import UserService
+import pathlib
 
 router = APIRouter()
-user_service = UserService("data/user_interactions.csv")
+
+base_path = pathlib.Path(__file__).parent.parent.resolve()
+user_file_path = base_path / "data" / "user_interactions.csv"
+
+user_service = UserService(str(user_file_path))
 
 
 @router.get("/users/ids", tags=["Users"])
